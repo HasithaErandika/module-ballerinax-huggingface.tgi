@@ -31,8 +31,7 @@ configurable string serviceUrl = "http://localhost:8080";
 // ---------------------------------------------------------------------------
 listener http:Listener mockListener = new (9090);
 
-@http:ServiceConfig {basePath: "/"}
-service on mockListener {
+service "/" on mockListener {
 
     // POST /  (compat generate)
     resource function post .(http:Caller caller, http:Request req) returns error? {
@@ -59,7 +58,9 @@ service on mockListener {
 
     // GET /health
     resource function get health(http:Caller caller, http:Request req) returns error? {
-        check caller->respond(http:STATUS_OK);
+        http:Response res = new;
+        res.statusCode = http:STATUS_OK;
+        check caller->respond(res);
     }
 
     // GET /info
@@ -154,7 +155,20 @@ service on mockListener {
 }
 
 // ---------------------------------------------------------------------------
-// Client initialisation (points at the mock service)
+// HuggingFace client (uses Bearer token auth — set token in Config.toml)
+// ---------------------------------------------------------------------------
+configurable string token = ?;
+
+ConnectionConfig config = {
+    auth: {
+        token: token
+    }
+};
+
+Client hfClient = check new ("https://api-inference.huggingface.co", config);
+
+// ---------------------------------------------------------------------------
+// Mock client (points at the local mock service for unit tests)
 // ---------------------------------------------------------------------------
 Client tgiClient = check new ("http://localhost:9090");
 
@@ -563,8 +577,8 @@ function testChatRequestPenalties() returns error? {
         presencePenalty: -1.0
     };
     // Verify fields are correctly set (type-level check)
-    test:assertEquals(req.frequencyPenalty, 1.5);
-    test:assertEquals(req.presencePenalty, -1.0);
+    test:assertEquals(req?.frequencyPenalty, 1.5);
+    test:assertEquals(req?.presencePenalty, -1.0);
 }
 
 // ===========================================================================

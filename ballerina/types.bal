@@ -108,6 +108,8 @@ public type ConnectionConfig record {|
     # Enables relaxed data binding on the client side. When enabled, `nil` values are treated as optional, 
     # and absent fields are handled as `nilable` types. Enabled by default.
     boolean laxDataBinding = true;
+    # Bearer token authentication configuration
+    http:BearerTokenConfig? auth = ();
 |};
 
 public type Tool record {
@@ -195,7 +197,11 @@ public type MessageChunkMessageChunkOneOf12 record {
 };
 
 public type Message record {
-    *MessageBody;
+    # Message content as plain text
+    MessageContent? content?;
+    # Tool calls made in assistant messages
+    @jsondata:Name {value: "tool_calls"}
+    ToolCall[]? toolCalls?;
     string role;
     string? name?;
 };
@@ -302,7 +308,7 @@ public type ChatRequest record {
     @jsondata:Name {value: "frequency_penalty"}
     float? frequencyPenalty?;
     @jsondata:Name {value: "response_format"}
-    GrammarType? responseFormat = "null";
+    GrammarType? responseFormat = ();
     # Up to 4 sequences where the API will stop generating further tokens
     string[]? stop?;
     boolean 'stream?;
@@ -362,7 +368,7 @@ public type GenerateParameters record {
     # decreasing the model's likelihood to repeat the same line verbatim
     @jsondata:Name {value: "frequency_penalty"}
     float? frequencyPenalty?;
-    GrammarType? grammar = "null";
+    GrammarType? grammar = ();
     # Generate best_of sequences and return the one if the highest token logprobs
     @jsondata:Name {value: "best_of"}
     int? bestOf?;
