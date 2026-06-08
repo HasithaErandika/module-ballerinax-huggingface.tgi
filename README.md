@@ -1,8 +1,8 @@
-# Ballerina {{MODULE_NAME_PC}} connector
+# Ballerina Hugging Face connector
 
-[![Build](https://github.com/ballerina-platform/{{REPO_NAME}}/actions/workflows/ci.yml/badge.svg)](https://github.com/ballerina-platform/{{REPO_NAME}}/actions/workflows/ci.yml)
-[![GitHub Last Commit](https://img.shields.io/github/last-commit/ballerina-platform/{{REPO_NAME}}.svg)](https://github.com/ballerina-platform/{{REPO_NAME}}/commits/master)
-[![GitHub Issues](https://img.shields.io/github/issues/ballerina-platform/ballerina-library/module/{{MODULE_NAME_CC}}.svg?label=Open%20Issues)](https://github.com/ballerina-platform/ballerina-library/labels/module%{{MODULE_NAME_CC}})
+[![Build](https://github.com/HasithaErandika/huggingface/actions/workflows/ci.yml/badge.svg)](https://github.com/HasithaErandika/huggingface/actions/workflows/ci.yml)
+[![GitHub Last Commit](https://img.shields.io/github/last-commit/HasithaErandika/huggingface.svg)](https://github.com/HasithaErandika/huggingface/commits/master)
+[![GitHub Issues](https://img.shields.io/github/issues/HasithaErandika/huggingface.svg?label=Open%20Issues)](https://github.com/HasithaErandika/huggingface/issues)
 
 ## Overview
 
@@ -18,7 +18,7 @@
 
 ## Examples
 
-The `{{MODULE_NAME_PC}}` connector provides practical examples illustrating usage in various scenarios. Explore these [examples](https://github.com/{{REPO_NAME}}/tree/main/examples/), covering the following use cases:
+The `Hugging Face` connector provides practical examples illustrating usage in various scenarios. Explore these [examples](https://github.com/HasithaErandika/huggingface/tree/main/examples/), covering the following use cases:
 
 [//]: # (TODO: Add examples)
 
@@ -110,7 +110,7 @@ All the contributors are encouraged to read the [Ballerina Code of Conduct](http
 
 ## Useful links
 
-* For more information go to the [`{{MODULE_NAME_CC}}` package](https://central.ballerina.io/ballerinax/{{MODULE_NAME_CC}}/latest).
+* For more information go to the [`huggingface` package](https://central.ballerina.io/avi0ra/huggingface/latest).
 * For example demonstrations of the usage, go to [Ballerina By Examples](https://ballerina.io/learn/by-example/).
 * Chat live with us via our [Discord server](https://discord.gg/ballerinalang).
 * Post all technical questions on Stack Overflow with the [#ballerina](https://stackoverflow.com/questions/tagged/ballerina) tag.

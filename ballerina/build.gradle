@@ -1,5 +1,5 @@
 /*
- * Copyright (c) {{LICENSE_YEAR}}, WSO2 LLC. (http://www.wso2.com).
+ * Copyright (c) 2026, WSO2 LLC. (http://www.wso2.com).
  *
  * WSO2 LLC. licenses this file to you under the Apache License,
  * Version 2.0 (the "License"); you may not use this file except
@@ -22,10 +22,10 @@ plugins {
     id 'io.ballerina.plugin'
 }
 
-description = '{{MODULE_NAME_PC}} - Ballerina'
+description = 'HuggingFace - Ballerina'
 
-def packageName = "{{MODULE_NAME_CC}}"
-def packageOrg = "ballerinax"
+def packageName = "huggingface"
+def packageOrg = "avi0ra"
 def tomlVersion = stripBallerinaExtensionVersion("${project.version}")
 def ballerinaTomlFilePlaceHolder = new File("${project.rootDir}/build-config/resources/Ballerina.toml")
 def ballerinaTomlFile = new File("$project.projectDir/Ballerina.toml")
@@ -82,7 +82,7 @@ publishing {
     repositories {
         maven {
             name = "GitHubPackages"
-            url = uri("https://maven.pkg.github.com/ballerina-platform/module-${packageOrg}-${packageName}")
+            url = uri("https://maven.pkg.github.com/HasithaErandika/huggingface")
             credentials {
                 username = System.getenv("publishUser")
                 password = System.getenv("publishPAT")

@@ -1,13 +1,13 @@
 [package]
-distribution = "{{BAL_VERSION}}"
-org = "ballerinax"
-name = "{{MODULE_NAME_CC}}"
-version = "{{MODULE_VERSION}}"
+distribution = "2201.13.1"
+org = "avi0ra"
+name = "huggingface"
+version = "2.0.0"
 license = ["Apache-2.0"]
 authors = ["Ballerina"]
 keywords = []
-# icon = "icon.png" # TODO: update icon.png
-repository = "https://github.com/ballerina-platform/{{REPO_NAME}}"
+icon = "icon.png"
+repository = "https://github.com/HasithaErandika/huggingface"
 
 [build-options]
 observabilityIncluded = true

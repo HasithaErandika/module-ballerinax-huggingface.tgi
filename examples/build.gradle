@@ -1,5 +1,5 @@
 /*
- * Copyright (c) {{LICENSE_YEAR}}, WSO2 LLC. (http://www.wso2.com).
+ * Copyright (c) 2026, WSO2 LLC. (http://www.wso2.com).
  *
  * WSO2 LLC. licenses this file to you under the Apache License,
  * Version 2.0 (the "License"); you may not use this file except
@@ -46,7 +46,7 @@ task testExamples {
 
 task buildExamples {
     gradle.taskGraph.whenReady { graph ->
-        if (graph.hasTask(":{{MODULE_NAME_CC}}-examples:test")) {
+        if (graph.hasTask(":huggingface-examples:test")) {
             buildExamples.enabled = false
         } else {
             testExamples.enabled = false
@@ -70,8 +70,8 @@ task buildExamples {
     }
 }
 
-buildExamples.dependsOn ":{{MODULE_NAME_CC}}-ballerina:build"
-testExamples.dependsOn ":{{MODULE_NAME_CC}}-ballerina:build"
+buildExamples.dependsOn ":huggingface-ballerina:build"
+testExamples.dependsOn ":huggingface-ballerina:build"
 
 // TODO: Enable the examples build once https://github.com/ballerina-platform/ballerina-library/issues/6135 is fixed
 // test.dependsOn testExamples
