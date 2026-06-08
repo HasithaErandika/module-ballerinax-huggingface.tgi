@@ -7,7 +7,7 @@ license = ["Apache-2.0"]
 authors = ["Ballerina"]
 keywords = []
 icon = "icon.png"
-repository = "https://github.com/HasithaErandika/huggingface"
+repository = "https://github.com/HasithaErandika/module-ballerinax-huggingface"
 
 [build-options]
 observabilityIncluded = true

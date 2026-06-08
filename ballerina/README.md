@@ -105,6 +105,6 @@ bal run
 
 ## Examples
 
-The `Hugging Face` connector provides practical examples illustrating usage in various scenarios. Explore these [examples](https://github.com/HasithaErandika/huggingface/tree/main/examples/), covering the following use cases:
+The `Hugging Face` connector provides practical examples illustrating usage in various scenarios. Explore these [examples](https://github.com/HasithaErandika/module-ballerinax-huggingface/tree/main/examples/), covering the following use cases:
 
 [//]: # (TODO: Add examples)

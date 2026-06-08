@@ -82,7 +82,7 @@ publishing {
     repositories {
         maven {
             name = "GitHubPackages"
-            url = uri("https://maven.pkg.github.com/HasithaErandika/huggingface")
+            url = uri("https://maven.pkg.github.com/HasithaErandika/module-ballerinax-huggingface")
             credentials {
                 username = System.getenv("publishUser")
                 password = System.getenv("publishPAT")

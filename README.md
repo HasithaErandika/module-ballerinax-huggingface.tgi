@@ -1,9 +1,9 @@
 # Ballerina Hugging Face Connector
 
-[![Build](https://github.com/HasithaErandika/huggingface/actions/workflows/ci.yml/badge.svg)](https://github.com/HasithaErandika/huggingface/actions/workflows/ci.yml)
-[![GitHub Last Commit](https://img.shields.io/github/last-commit/HasithaErandika/huggingface.svg)](https://github.com/HasithaErandika/huggingface/commits/master)
+[![Build](https://github.com/HasithaErandika/module-ballerinax-huggingface/actions/workflows/ci.yml/badge.svg)](https://github.com/HasithaErandika/module-ballerinax-huggingface/actions/workflows/ci.yml)
+[![GitHub Last Commit](https://img.shields.io/github/last-commit/HasithaErandika/module-ballerinax-huggingface.svg)](https://github.com/HasithaErandika/module-ballerinax-huggingface/commits/master)
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
-[![GitHub Issues](https://img.shields.io/github/issues/HasithaErandika/huggingface.svg?label=Open%20Issues)](https://github.com/HasithaErandika/huggingface/issues)
+[![GitHub Issues](https://img.shields.io/github/issues/HasithaErandika/module-ballerinax-huggingface.svg?label=Open%20Issues)](https://github.com/HasithaErandika/module-ballerinax-huggingface/issues)
 
 ## Overview
 
@@ -104,13 +104,13 @@ bal run
 
 ## Examples
 
-The `Hugging Face` connector provides practical examples illustrating usage in various scenarios. Explore these [examples](https://github.com/HasithaErandika/huggingface/tree/main/examples/), covering the following use cases:
+The `Hugging Face` connector provides practical examples illustrating usage in various scenarios. Explore these [examples](https://github.com/HasithaErandika/module-ballerinax-huggingface/tree/main/examples/), covering the following use cases:
 
 [//]: # (TODO: Add examples)
 
 ## Issues and projects
 
-The **Issues** and **Projects** tabs are available for this repository. To report bugs, request new features, or start discussions, visit the [Issues](https://github.com/HasithaErandika/huggingface/issues) page.
+The **Issues** and **Projects** tabs are available for this repository. To report bugs, request new features, or start discussions, visit the [Issues](https://github.com/HasithaErandika/module-ballerinax-huggingface/issues) page.
 
 ## Building from the source
 
