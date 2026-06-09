@@ -7,9 +7,19 @@
 
 ## Overview
 
-[Hugging Face](https://huggingface.co/) is a leading AI platform that hosts thousands of open-source machine learning models, datasets, and demos. It provides a hub for the AI community to collaborate and access state-of-the-art models for natural language processing, computer vision, and more.
+HuggingFace Text Generation Inference (TGI) is a high-performance serving framework for large language models. It powers HuggingFace Inference Endpoints and supports models such as Llama, Mistral, Qwen, Falcon, and more.
 
-The `avi0ra/huggingface.tgi` package offers APIs to connect and interact with the [Hugging Face Text Generation Inference (TGI)](https://huggingface.co/docs/text-generation-inference) API endpoints, enabling text generation, chat completions, tokenization, streaming, and more using hosted LLMs.
+The `ballerinax/huggingface.tgi` connector provides a Ballerina client for the TGI REST API, covering:
+
+- OpenAI-compatible chat via `/v1/chat/completions` (drop-in replacement for OpenAI SDK users)
+- OpenAI-compatible completions via `/v1/completions`
+- TGI native generation via `/generate` with full sampling control
+- Streaming generation via `/generate_stream` (Server-Sent Events)
+- Tokenization via `/tokenize` and `/chat_tokenize`
+- Model & server info via `/info` and `/v1/models`
+- Health check via `/health`
+
+Note: For text embeddings, reranking, and classification, see `ballerinax/huggingface.tei`.
 
 ## Setup guide
 
@@ -104,9 +114,10 @@ bal run
 
 ## Examples
 
-The `Hugging Face` connector provides practical examples illustrating usage in various scenarios. Explore these [examples](https://github.com/HasithaErandika/module-ballerinax-huggingface.tgi/tree/main/examples/), covering the following use cases:
+The `huggingface.tgi` connector provides practical examples illustrating usage in various scenarios. Explore these [examples](https://github.com/HasithaErandika/module-ballerinax-huggingface.tgi/tree/main/examples/), covering the following use cases:
 
-[//]: # (TODO: Add examples)
+1. **Text Generation** - Demonstrates native `/generate` endpoint with sampling control for creative writing, factual completion, and code generation
+2. **Token Counter** - Shows how to use `/tokenize` and `/info` endpoints to count tokens and check against model context windows
 
 ## Issues and projects
 

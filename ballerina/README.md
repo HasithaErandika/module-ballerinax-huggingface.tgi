@@ -1,16 +1,18 @@
 ## Overview
 
-[Hugging Face](https://huggingface.co/) is a leading AI platform that hosts thousands of open-source machine learning models, datasets, and demos. It provides a hub for the AI community to collaborate and access state-of-the-art models for natural language processing, computer vision, and more.
+HuggingFace Text Generation Inference (TGI) is a high-performance serving framework for large language models. It powers HuggingFace Inference Endpoints and supports models such as Llama, Mistral, Qwen, Falcon, and more.
 
-The `avi0ra/huggingface.tgi` connector offers APIs to connect and interact with the [Hugging Face Text Generation Inference (TGI)](https://huggingface.co/docs/text-generation-inference) API endpoints, enabling you to generate text, run chat completions, tokenize inputs, and more using hosted LLMs.
+The `avi0ra/huggingface.tgi` connector provides a Ballerina client for the TGI REST API, covering:
 
-### Key Features
+- OpenAI-compatible chat via `/v1/chat/completions` (drop-in replacement for OpenAI SDK users)
+- OpenAI-compatible completions via `/v1/completions`
+- TGI native generation via `/generate` with full sampling control
+- Streaming generation via `/generate_stream` (Server-Sent Events)
+- Tokenization via `/tokenize` and `/chat_tokenize`
+- Model & server info via `/info` and `/v1/models`
+- Health check via `/health`
 
-- Generate text completions using open-source LLMs via the TGI API
-- Run OpenAI-compatible chat completions (`/v1/chat/completions`)
-- Tokenize and analyze inputs with `/tokenize` and `/chat_tokenize`
-- Stream token generation with Server-Sent Events (SSE) via `/generate_stream`
-- Access model info, health status, and Prometheus metrics
+Note: For text embeddings, reranking, and classification, see `ballerinax/huggingface.tei`.
 
 ## Setup guide
 
@@ -105,6 +107,7 @@ bal run
 
 ## Examples
 
-The `Hugging Face` connector provides practical examples illustrating usage in various scenarios. Explore these [examples](https://github.com/HasithaErandika/module-ballerinax-huggingface.tgi/tree/main/examples/), covering the following use cases:
+The `huggingface.tgi` connector provides practical examples illustrating usage in various scenarios. Explore these [examples](https://github.com/HasithaErandika/module-ballerinax-huggingface.tgi/tree/main/examples/), covering the following use cases:
 
-[//]: # (TODO: Add examples)
+1. **Text Generation** - Native `/generate` endpoint with fine-grained sampling control (temperature, top-k, top-p, repetition penalty)
+2. **Token Counter** - Using `/tokenize` and `/info` endpoints to count tokens and check context windows

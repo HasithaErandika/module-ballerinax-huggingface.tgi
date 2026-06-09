@@ -5,7 +5,20 @@ name = "huggingface.tgi"
 version = "1.0.0"
 license = ["Apache-2.0"]
 authors = ["Ballerina"]
-keywords = [] # TODO: Add keywords
+keywords = [
+    "AI/Chat",
+    "AI/Text Generation",
+    "HuggingFace",
+    "TGI",
+    "LLM",
+    "OpenAI Compatible",
+    "Streaming",
+    "Inference",
+    "Llama",
+    "Mistral",
+    "Vendor/HuggingFace",
+    "Cost/Free"
+]
 icon = "icon.png"
 repository = "https://github.com/HasithaErandika/module-ballerinax-huggingface.tgi"
 
