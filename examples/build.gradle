@@ -70,8 +70,8 @@ task buildExamples {
     }
 }
 
-buildExamples.dependsOn ":huggingface-ballerina:build"
-testExamples.dependsOn ":huggingface-ballerina:build"
+buildExamples.dependsOn ":huggingface.tgi-ballerina:build"
+testExamples.dependsOn ":huggingface.tgi-ballerina:build"
 
 // TODO: Enable the examples build once https://github.com/ballerina-platform/ballerina-library/issues/6135 is fixed
 // test.dependsOn testExamples

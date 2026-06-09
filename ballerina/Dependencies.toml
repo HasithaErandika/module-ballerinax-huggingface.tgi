@@ -9,8 +9,8 @@ distribution-version = "2201.13.1"
 
 [[package]]
 org = "avi0ra"
-name = "huggingface"
-version = "2.0.0"
+name = "huggingface.tgi"
+version = "1.0.0"
 dependencies = [
 	{org = "ballerina", name = "constraint"},
 	{org = "ballerina", name = "data.jsondata"},
@@ -21,7 +21,7 @@ dependencies = [
 	{org = "ballerinai", name = "observe"}
 ]
 modules = [
-	{org = "avi0ra", packageName = "huggingface", moduleName = "huggingface"}
+	{org = "avi0ra", packageName = "huggingface.tgi", moduleName = "huggingface.tgi"}
 ]
 
 [[package]]

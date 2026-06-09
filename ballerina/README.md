@@ -2,7 +2,7 @@
 
 [Hugging Face](https://huggingface.co/) is a leading AI platform that hosts thousands of open-source machine learning models, datasets, and demos. It provides a hub for the AI community to collaborate and access state-of-the-art models for natural language processing, computer vision, and more.
 
-The `avi0ra/huggingface` connector offers APIs to connect and interact with the [Hugging Face Text Generation Inference (TGI)](https://huggingface.co/docs/text-generation-inference) API endpoints, enabling you to generate text, run chat completions, tokenize inputs, and more using hosted LLMs.
+The `avi0ra/huggingface.tgi` connector offers APIs to connect and interact with the [Hugging Face Text Generation Inference (TGI)](https://huggingface.co/docs/text-generation-inference) API endpoints, enabling you to generate text, run chat completions, tokenize inputs, and more using hosted LLMs.
 
 ### Key Features
 
@@ -41,14 +41,14 @@ You can either:
 
 ## Quickstart
 
-To use the `huggingface` connector in your Ballerina application, update the `.bal` file as follows:
+To use the `huggingface.tgi` connector in your Ballerina application, update the `.bal` file as follows:
 
 ### Step 1: Import the module
 
-Import the `huggingface` module.
+Import the `huggingface.tgi` module.
 
 ```ballerina
-import avi0ra/huggingface;
+import avi0ra/huggingface.tgi;
 ```
 
 ### Step 2: Instantiate a new connector
@@ -59,12 +59,12 @@ import avi0ra/huggingface;
 token = "<Your Hugging Face API Token>"
 ```
 
-2. Create a `huggingface:ConnectionConfig` with the access token and initialize the connector with it.
+2. Create a `huggingface.tgi:ConnectionConfig` with the access token and initialize the connector with it.
 
 ```ballerina
 configurable string token = ?;
 
-final huggingface:Client hfClient = check new ("https://api-inference.huggingface.co", {
+final huggingface.tgi:Client hfClient = check new ("https://api-inference.huggingface.co", {
     auth: {
         token: token
     }
@@ -79,7 +79,7 @@ Now, utilize the available connector operations.
 
 ```ballerina
 public function main() returns error? {
-    huggingface:ChatCompletion completion = check hfClient->/v1/chat/completions.post({
+    huggingface.tgi:ChatCompletion completion = check hfClient->/v1/chat/completions.post({
         messages: [{role: "user", content: "What is Deep Learning?"}],
         temperature: 0.7
     });
@@ -90,7 +90,7 @@ public function main() returns error? {
 
 ```ballerina
 public function main() returns error? {
-    huggingface:GenerateResponse resp = check hfClient->/generate.post({
+    huggingface.tgi:GenerateResponse resp = check hfClient->/generate.post({
         inputs: "Once upon a time",
         parameters: {maxNewTokens: 50}
     });
@@ -105,6 +105,6 @@ bal run
 
 ## Examples
 
-The `Hugging Face` connector provides practical examples illustrating usage in various scenarios. Explore these [examples](https://github.com/HasithaErandika/module-ballerinax-huggingface/tree/main/examples/), covering the following use cases:
+The `Hugging Face` connector provides practical examples illustrating usage in various scenarios. Explore these [examples](https://github.com/HasithaErandika/module-ballerinax-huggingface.tgi/tree/main/examples/), covering the following use cases:
 
 [//]: # (TODO: Add examples)

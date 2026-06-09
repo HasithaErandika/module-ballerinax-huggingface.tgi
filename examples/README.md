@@ -1,6 +1,6 @@
 # Examples
 
-The `avi0ra/huggingface` connector provides practical examples illustrating usage in various scenarios.
+The `avi0ra/huggingface.tgi` connector provides practical examples illustrating usage in various scenarios.
 
 [//]: # (TODO: Add examples)
 1. 

@@ -58,7 +58,7 @@ allprojects {
 def moduleVersion = project.version.replace("-SNAPSHOT", "")
 
 task build {
-    dependsOn(':huggingface-ballerina:build')
+    dependsOn(':huggingface.tgi-ballerina:build')
 }
 
 release {
