@@ -534,9 +534,12 @@ function testSagemakerInvocations() returns error? {
         'stream: false
     };
     SagemakerResponse resp = check tgiClient->/invocations.post(sagReq);
-    // SagemakerResponse is a union; just verify it is not an error
-    test:assertTrue(resp is GenerateResponse|ChatCompletion|CompletionFinal,
-        "Should return a valid SageMaker response type");
+    
+    // Precise type assertion (silences the compiler hint)
+    test:assertTrue(resp is GenerateResponse, "Expected SageMaker response to be of type GenerateResponse");
+    if resp is GenerateResponse {
+        test:assertEquals(resp.generatedText, "sagemaker generated text", "Payload content mismatch");
+    }
 }
 
 // ===========================================================================
