@@ -50,11 +50,11 @@ You can either:
 
 ## Quickstart
 
-To use the `huggingface.tgi` connector in your Ballerina application, update the `.bal` file as follows:
+To use the `ballerinax/huggingface.tgi` connector in your Ballerina application, update the `.bal` file as follows:
 
 ### Step 1: Import the module
 
-Import the `huggingface.tgi` module.
+Import the `ballerinax/huggingface.tgi` module.
 
 ```ballerina
 import ballerinax/huggingface.tgi;
@@ -68,12 +68,12 @@ import ballerinax/huggingface.tgi;
 token = "<Your Hugging Face API Token>"
 ```
 
-2. Create a `huggingface.tgi:ConnectionConfig` with the access token and initialize the connector with it.
+2. Initialize the connector using `tgi:ConnectionConfig` with the access token.
 
 ```ballerina
 configurable string token = ?;
 
-final huggingface.tgi:Client hfClient = check new ({
+final tgi:Client hfClient = check new ({
     auth: {
         token: token
     }
@@ -88,7 +88,7 @@ Now, utilize the available connector operations.
 
 ```ballerina
 public function main() returns error? {
-    huggingface.tgi:ChatCompletion completion = check hfClient->/v1/chat/completions.post({
+    tgi:ChatCompletion completion = check hfClient->/v1/chat/completions.post({
         messages: [{role: "user", content: "What is Deep Learning?"}],
         temperature: 0.7
     });
@@ -99,7 +99,7 @@ public function main() returns error? {
 
 ```ballerina
 public function main() returns error? {
-    huggingface.tgi:GenerateResponse resp = check hfClient->/generate.post({
+    tgi:GenerateResponse resp = check hfClient->/generate.post({
         inputs: "Once upon a time",
         parameters: {maxNewTokens: 50}
     });
