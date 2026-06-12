@@ -26,137 +26,7 @@ import ballerina/test;
 // If no live server is available the mock service below will be used instead.
 configurable string serviceUrl = "http://localhost:8080";
 
-// ---------------------------------------------------------------------------
-// Mock HTTP service (used when a live TGI instance is not available)
-// ---------------------------------------------------------------------------
-listener http:Listener mockListener = new (9090);
-
-service "/" on mockListener {
-
-    // POST /  (compat generate)
-    resource function post .(http:Caller caller, http:Request req) returns error? {
-        json payload = [{generated_text: "test output from compat generate"}];
-        check caller->respond(payload);
-    }
-
-    // POST /generate
-    resource function post generate(http:Caller caller, http:Request req) returns error? {
-        json payload = {generated_text: "once upon a time"};
-        check caller->respond(payload);
-    }
-
-    // POST /generate_stream  — returns a minimal SSE response
-    resource function post generate_stream(http:Caller caller, http:Request req) returns error? {
-        http:Response res = new;
-        res.setHeader("Content-Type", "text/event-stream");
-        res.setTextPayload(
-            "data: {\"index\":0,\"token\":{\"id\":1,\"text\":\" hello\",\"logprob\":-0.5,\"special\":false}}\n\n" +
-            "data: {\"index\":1,\"token\":{\"id\":2,\"text\":\" world\",\"logprob\":-0.3,\"special\":false},\"generated_text\":\" hello world\"}\n\n"
-        );
-        check caller->respond(res);
-    }
-
-    // GET /health
-    resource function get health(http:Caller caller, http:Request req) returns error? {
-        http:Response res = new;
-        res.statusCode = http:STATUS_OK;
-        check caller->respond(res);
-    }
-
-    // GET /info
-    resource function get info(http:Caller caller, http:Request req) returns error? {
-        json payload = {
-            model_id: "mock-model",
-            max_concurrent_requests: 128,
-            max_best_of: 2,
-            max_stop_sequences: 4,
-            max_input_tokens: 1024,
-            max_total_tokens: 2048,
-            validation_workers: 2,
-            max_client_batch_size: 32,
-            router: "text-generation-router",
-            version: "3.3.6-dev0"
-        };
-        check caller->respond(payload);
-    }
-
-    // POST /tokenize
-    resource function post tokenize(http:Caller caller, http:Request req) returns error? {
-        json payload = [
-            {id: 1, text: "hello", 'start: 0, stop: 5},
-            {id: 2, text: " world", 'start: 5, stop: 11}
-        ];
-        check caller->respond(payload);
-    }
-
-    // POST /chat_tokenize
-    resource function post chat_tokenize(http:Caller caller, http:Request req) returns error? {
-        json payload = {
-            templated_text: "<s>[INST] What is Deep Learning? [/INST]",
-            tokenize_response: [
-                {id: 1, text: "<s>", 'start: 0, stop: 3},
-                {id: 2, text: "[INST]", 'start: 3, stop: 9}
-            ]
-        };
-        check caller->respond(payload);
-    }
-
-    // POST /v1/chat/completions
-    resource function post v1/chat/completions(http:Caller caller, http:Request req) returns error? {
-        json payload = {
-            id: "chatcmpl-mock-001",
-            created: 1706270835,
-            model: "mock-model",
-            system_fingerprint: "mock-fp",
-            choices: [{
-                index: 0,
-                message: {role: "assistant", content: "Deep Learning is a subset of machine learning."},
-                finish_reason: "stop"
-            }],
-            usage: {prompt_tokens: 10, completion_tokens: 20, total_tokens: 30}
-        };
-        check caller->respond(payload);
-    }
-
-    // POST /v1/completions
-    resource function post v1/completions(http:Caller caller, http:Request req) returns error? {
-        json payload = {
-            id: "cmpl-mock-001",
-            created: 1706270835,
-            model: "mock-model",
-            system_fingerprint: "mock-fp",
-            choices: [{index: 0, text: "deep learning rocks", finish_reason: "stop"}],
-            usage: {prompt_tokens: 5, completion_tokens: 10, total_tokens: 15}
-        };
-        check caller->respond(payload);
-    }
-
-    // GET /v1/models
-    resource function get v1/models(http:Caller caller, http:Request req) returns error? {
-        json payload = {
-            id: "mock-model",
-            'object: "model",
-            created: 1686935002,
-            owned_by: "huggingface"
-        };
-        check caller->respond(payload);
-    }
-
-    // GET /metrics
-    resource function get metrics(http:Caller caller, http:Request req) returns error? {
-        check caller->respond("# HELP tgi_requests_total Total number of requests\n# TYPE tgi_requests_total counter\ntgi_requests_total 42\n");
-    }
-
-    // POST /invocations  (SageMaker compat)
-    resource function post invocations(http:Caller caller, http:Request req) returns error? {
-        json payload = {generated_text: "sagemaker generated text"};
-        check caller->respond(payload);
-    }
-}
-
-// ---------------------------------------------------------------------------
 // HuggingFace client (uses Bearer token auth — set token in Config.toml)
-// ---------------------------------------------------------------------------
 configurable string token = ?;
 
 ConnectionConfig config = {
@@ -165,16 +35,12 @@ ConnectionConfig config = {
     }
 };
 
-Client hfClient = check new ("https://api-inference.huggingface.co", config);
+Client hfClient = check new (config, "https://api-inference.huggingface.co");
 
-// ---------------------------------------------------------------------------
 // Mock client (points at the local mock service for unit tests)
-// ---------------------------------------------------------------------------
-Client tgiClient = check new ("http://localhost:9090");
+Client tgiClient = check new ({}, "http://localhost:9090");
 
-// ===========================================================================
-// 1. Health-check
-// ===========================================================================
+// Health-check
 @test:Config {
     groups: ["health"]
 }
@@ -183,9 +49,7 @@ function testHealthCheck() returns error? {
     test:assertTrue(result is (), "Health check should return nil on success");
 }
 
-// ===========================================================================
-// 2. Model info  —  GET /info
-// ===========================================================================
+// Model info  —  GET /info
 @test:Config {
     groups: ["info"]
 }
@@ -198,9 +62,7 @@ function testGetModelInfo() returns error? {
     io:println("Model info: ", info);
 }
 
-// ===========================================================================
-// 3. OpenAI model info  —  GET /v1/models
-// ===========================================================================
+// OpenAI model info  —  GET /v1/models
 @test:Config {
     groups: ["info"]
 }
@@ -211,9 +73,7 @@ function testGetOpenAIModelInfo() returns error? {
     io:println("OpenAI model info: ", modelInfo);
 }
 
-// ===========================================================================
-// 4. Token generation  —  POST /generate  (basic)
-// ===========================================================================
+// Token generation  —  POST /generate  (basic)
 @test:Config {
     groups: ["generate"]
 }
@@ -231,9 +91,7 @@ function testGenerateBasic() returns error? {
     io:println("Generated text: ", resp.generatedText);
 }
 
-// ===========================================================================
-// 5. Token generation  —  POST /generate  (with details)
-// ===========================================================================
+// Token generation  —  POST /generate  (with details)
 @test:Config {
     groups: ["generate"]
 }
@@ -250,9 +108,7 @@ function testGenerateWithDetails() returns error? {
     test:assertNotEquals(resp.generatedText, "", "Generated text should not be empty");
 }
 
-// ===========================================================================
-// 6. Token generation  —  POST /generate  (with sampling params)
-// ===========================================================================
+// Token generation  —  POST /generate  (with sampling params)
 @test:Config {
     groups: ["generate"]
 }
@@ -273,9 +129,7 @@ function testGenerateWithSamplingParams() returns error? {
     test:assertNotEquals(resp.generatedText, "", "Generated text should not be empty");
 }
 
-// ===========================================================================
-// 7. Token generation  —  POST /generate  (stop sequences)
-// ===========================================================================
+// Token generation  —  POST /generate  (stop sequences)
 @test:Config {
     groups: ["generate"]
 }
@@ -291,9 +145,7 @@ function testGenerateWithStopSequences() returns error? {
     test:assertNotEquals(resp.generatedText, "", "Generated text should not be empty");
 }
 
-// ===========================================================================
-// 8. Compat generate  —  POST /
-// ===========================================================================
+// Compat generate  —  POST /
 @test:Config {
     groups: ["generate"]
 }
@@ -308,9 +160,7 @@ function testCompatGenerate() returns error? {
     test:assertNotEquals(responses[0].generatedText, "", "Generated text should not be empty");
 }
 
-// ===========================================================================
-// 9. Streaming  —  POST /generate_stream
-// ===========================================================================
+// Streaming  —  POST /generate_stream
 @test:Config {
     groups: ["streaming"]
 }
@@ -329,9 +179,7 @@ function testGenerateStream() returns error? {
     test:assertTrue(eventCount > 0, "Should receive at least one SSE event");
 }
 
-// ===========================================================================
-// 10. Tokenize  —  POST /tokenize
-// ===========================================================================
+// Tokenize  —  POST /tokenize
 @test:Config {
     groups: ["tokenize"]
 }
@@ -347,9 +195,7 @@ function testTokenize() returns error? {
     io:println("Tokenized: ", tokens);
 }
 
-// ===========================================================================
-// 11. Chat tokenize  —  POST /chat_tokenize
-// ===========================================================================
+// Chat tokenize  —  POST /chat_tokenize
 @test:Config {
     groups: ["tokenize"]
 }
@@ -364,9 +210,7 @@ function testChatTokenize() returns error? {
     io:println("Chat tokenize response: ", resp);
 }
 
-// ===========================================================================
-// 12. Chat completions  —  POST /v1/chat/completions  (basic)
-// ===========================================================================
+// Chat completions  —  POST /v1/chat/completions  (basic)
 @test:Config {
     groups: ["chat"]
 }
@@ -385,9 +229,7 @@ function testChatCompletionsBasic() returns error? {
     io:println("Chat completion: ", completion.choices[0].message);
 }
 
-// ===========================================================================
-// 13. Chat completions  —  multi-turn conversation
-// ===========================================================================
+// Chat completions  —  multi-turn conversation
 @test:Config {
     groups: ["chat"]
 }
@@ -406,9 +248,7 @@ function testChatCompletionsMultiTurn() returns error? {
     test:assertTrue(completion.choices.length() > 0, "Should have at least one choice");
 }
 
-// ===========================================================================
-// 14. Chat completions  —  usage stats present
-// ===========================================================================
+// Chat completions  —  usage stats present
 @test:Config {
     groups: ["chat"]
 }
@@ -426,9 +266,7 @@ function testChatCompletionsUsage() returns error? {
     );
 }
 
-// ===========================================================================
-// 15. Chat completions  —  with tools (function calling)
-// ===========================================================================
+// Chat completions  —  with tools (function calling)
 @test:Config {
     groups: ["chat", "tools"]
 }
@@ -458,9 +296,7 @@ function testChatCompletionsWithTools() returns error? {
     test:assertTrue(completion.choices.length() > 0, "Should have at least one choice");
 }
 
-// ===========================================================================
-// 16. Chat completions  —  with logprobs
-// ===========================================================================
+// Chat completions  —  with logprobs
 @test:Config {
     groups: ["chat"]
 }
@@ -475,9 +311,7 @@ function testChatCompletionsWithLogprobs() returns error? {
     test:assertTrue(completion.choices.length() > 0, "Should have at least one choice");
 }
 
-// ===========================================================================
-// 17. Legacy completions  —  POST /v1/completions
-// ===========================================================================
+// Legacy completions  —  POST /v1/completions
 @test:Config {
     groups: ["completions"]
 }
@@ -493,9 +327,7 @@ function testCompletions() returns error? {
     test:assertNotEquals(resp.choices[0].text, "", "Completion text should not be empty");
 }
 
-// ===========================================================================
-// 18. Legacy completions  —  with stop sequences
-// ===========================================================================
+// Legacy completions  —  with stop sequences
 @test:Config {
     groups: ["completions"]
 }
@@ -509,9 +341,7 @@ function testCompletionsWithStop() returns error? {
     test:assertTrue(resp.choices.length() > 0, "Should have at least one choice");
 }
 
-// ===========================================================================
-// 19. Prometheus metrics  —  GET /metrics
-// ===========================================================================
+// Prometheus metrics  —  GET /metrics
 @test:Config {
     groups: ["metrics"]
 }
@@ -521,9 +351,7 @@ function testGetMetrics() returns error? {
     io:println("Metrics (first 200 chars): ", metrics.substring(0, int:min(200, metrics.length())));
 }
 
-// ===========================================================================
-// 20. SageMaker invocations  —  POST /invocations
-// ===========================================================================
+// SageMaker invocations  —  POST /invocations
 @test:Config {
     groups: ["sagemaker"]
 }
@@ -534,17 +362,13 @@ function testSagemakerInvocations() returns error? {
         'stream: false
     };
     SagemakerResponse resp = check tgiClient->/invocations.post(sagReq);
-    
-    // Precise type assertion (silences the compiler hint)
     test:assertTrue(resp is GenerateResponse, "Expected SageMaker response to be of type GenerateResponse");
     if resp is GenerateResponse {
         test:assertEquals(resp.generatedText, "sagemaker generated text", "Payload content mismatch");
     }
 }
 
-// ===========================================================================
-// 21. GenerateParameters defaults validation
-// ===========================================================================
+// GenerateParameters defaults validation
 @test:Config {
     groups: ["params"]
 }
@@ -556,9 +380,7 @@ function testGenerateParameterDefaults() returns error? {
     test:assertTrue(params.details, "details should default to true");
 }
 
-// ===========================================================================
-// 22. CompatGenerateRequest stream default
-// ===========================================================================
+// CompatGenerateRequest stream default
 @test:Config {
     groups: ["params"]
 }
@@ -567,9 +389,7 @@ function testCompatGenerateStreamDefault() returns error? {
     test:assertFalse(req.'stream, "stream should default to false");
 }
 
-// ===========================================================================
-// 23. ChatRequest — frequency & presence penalty range
-// ===========================================================================
+// ChatRequest — frequency & presence penalty range
 @test:Config {
     groups: ["params"]
 }
@@ -579,14 +399,11 @@ function testChatRequestPenalties() returns error? {
         frequencyPenalty: 1.5,
         presencePenalty: -1.0
     };
-    // Verify fields are correctly set (type-level check)
     test:assertEquals(req?.frequencyPenalty, 1.5);
     test:assertEquals(req?.presencePenalty, -1.0);
 }
 
-// ===========================================================================
-// 24. Token type fields
-// ===========================================================================
+// Token type fields
 @test:Config {
     groups: ["types"]
 }
@@ -597,9 +414,7 @@ function testTokenTypeFields() {
     test:assertFalse(t.special);
 }
 
-// ===========================================================================
-// 25. Usage totals
-// ===========================================================================
+// Usage totals
 @test:Config {
     groups: ["types"]
 }
