@@ -1,8 +1,8 @@
 [package]
 distribution = "2201.13.1"
-org = "avi0ra"
+org = "ballerinax"
 name = "huggingface.tgi"
-version = "1.0.0"
+version = "@toml.version@"
 license = ["Apache-2.0"]
 authors = ["Ballerina"]
 keywords = [
@@ -19,8 +19,7 @@ keywords = [
     "Vendor/HuggingFace",
     "Cost/Free"
 ]
-icon = "icon.png"
-repository = "https://github.com/HasithaErandika/module-ballerinax-huggingface.tgi"
+repository = "https://github.com/ballerina-platform/module-ballerinax-huggingface.tgi"
 
 [build-options]
 observabilityIncluded = true

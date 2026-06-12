@@ -91,34 +91,26 @@ The correct default is `()` (nil/absent), which causes the field to be omitted f
 The auto-generated `ConnectionConfig` contained no auth field, and the `Client.init()` passed
 no `auth` config to `http:ClientConfiguration`, making it **impossible to connect to secured endpoints**.
 
-### Change in `types.bal` — Added `token` field to `ConnectionConfig`
+### Change in `types.bal` — Added `auth` field to `ConnectionConfig`
 
 ```ballerina
-# Hugging Face API token for Bearer authentication.
-# Required for gated models (e.g., Llama) and private/dedicated TGI endpoints.
-# Obtain your token at https://huggingface.co/settings/tokens
-@display {label: "HF API Token", kind: "password"}
-string token?;
+    # Bearer token configuration for Hugging Face authentication.
+    # Required for gated models (e.g., Llama) and private/dedicated TGI endpoints.
+    # Example: { token: "hf_xxxx" }. Obtain your token at https://huggingface.co/settings/tokens
+    @display {label: "HF Auth Config"}
+    http:BearerTokenConfig auth?;
 ```
 
-The field is optional so that anonymous (public) TGI instances continue to work with no changes.
-
-### Change in `client.bal` — Wire `token` into `http:ClientConfiguration`
+### Change in `client.bal` — Wire `auth` into `http:ClientConfiguration`
 
 ```ballerina
-http:BearerTokenConfig|http:NoAuth authConfig = config.token is string
-    ? {token: <string>config.token}
-    : {};
-http:ClientConfiguration httpClientConfig = {
-    auth: authConfig,
-    // ... all other fields unchanged
-};
+        http:ClientConfiguration httpClientConfig = {
+            auth: config.auth,
+            // ... all other fields unchanged
+        };
 ```
 
-When `config.token` is present, the HTTP client is configured with `http:BearerTokenConfig`,
-causing the `Authorization: Bearer <token>` header to be injected automatically into every request.
-When `config.token` is absent (the default), `http:NoAuth` (`{}`) is used — preserving backwards
-compatibility with public endpoints.
+When `config.auth` is configured (e.g., containing the Hugging Face token), the HTTP client is configured with Bearer token authentication, causing the `Authorization: Bearer <token>` header to be injected automatically into every request. When no auth is provided, no authorization header is sent, preserving backwards compatibility with public/local endpoints.
 
 ---
 

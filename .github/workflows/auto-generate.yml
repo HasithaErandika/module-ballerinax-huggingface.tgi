@@ -31,7 +31,7 @@ on:
 jobs:
   call_workflow:
     name: Run Auto-Generate Connector Workflow
-    if: ${{ github.repository_owner == 'HasithaErandika' }}
+    if: ${{ github.repository_owner == 'ballerina-platform' }}
     uses: ballerina-platform/ballerina-library/.github/workflows/auto_generate_connector_template.yml@connector-automation
     secrets: inherit
     with:

@@ -2,7 +2,7 @@
 
 HuggingFace Text Generation Inference (TGI) is a high-performance serving framework for large language models. It powers HuggingFace Inference Endpoints and supports models such as Llama, Mistral, Qwen, Falcon, and more.
 
-The `avi0ra/huggingface.tgi` connector provides a Ballerina client for the TGI REST API, covering:
+The `ballerinax/huggingface.tgi` connector provides a Ballerina client for the TGI REST API, covering:
 
 - OpenAI-compatible chat via `/v1/chat/completions` (drop-in replacement for OpenAI SDK users)
 - OpenAI-compatible completions via `/v1/completions`
@@ -50,7 +50,7 @@ To use the `huggingface.tgi` connector in your Ballerina application, update the
 Import the `huggingface.tgi` module.
 
 ```ballerina
-import avi0ra/huggingface.tgi;
+import ballerinax/huggingface.tgi;
 ```
 
 ### Step 2: Instantiate a new connector
@@ -66,7 +66,7 @@ token = "<Your Hugging Face API Token>"
 ```ballerina
 configurable string token = ?;
 
-final huggingface.tgi:Client hfClient = check new ("https://api-inference.huggingface.co", {
+final huggingface.tgi:Client hfClient = check new ({
     auth: {
         token: token
     }
@@ -107,7 +107,7 @@ bal run
 
 ## Examples
 
-The `huggingface.tgi` connector provides practical examples illustrating usage in various scenarios. Explore these [examples](https://github.com/HasithaErandika/module-ballerinax-huggingface.tgi/tree/main/examples/), covering the following use cases:
+The `huggingface.tgi` connector provides practical examples illustrating usage in various scenarios. Explore these [examples](https://github.com/ballerina-platform/module-ballerinax-huggingface.tgi/tree/main/examples/), covering the following use cases:
 
 1. **Text Generation** - Native `/generate` endpoint with fine-grained sampling control (temperature, top-k, top-p, repetition penalty)
 2. **Token Counter** - Using `/tokenize` and `/info` endpoints to count tokens and check context windows

@@ -81,7 +81,7 @@ function printTokenBreakdown(tgi:TokenizeResponse tokens) {
 }
 
 public function main() returns error? {
-    tgi:Client tgiClient = check new (serviceUrl);
+    tgi:Client tgiClient = check new ({}, serviceUrl);
 
     io:println("=== HuggingFace TGI Token Counter ===\n");
 

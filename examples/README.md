@@ -1,6 +1,6 @@
 # Examples
 
-The `avi0ra/huggingface.tgi` connector provides practical examples illustrating usage in various scenarios.
+The `ballerinax/huggingface.tgi` connector provides practical examples illustrating usage in various scenarios.
 
 1. **Text Generation** - Native `/generate` endpoint with fine-grained sampling control (temperature, top-k, top-p, repetition penalty)
 2. **Token Counter** - Using `/tokenize` and `/info` endpoints to count tokens and check context windows

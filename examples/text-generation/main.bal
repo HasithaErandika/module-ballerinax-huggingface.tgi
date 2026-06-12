@@ -56,7 +56,7 @@ function generateText(tgi:Client tgiClient, string prompt,
 }
 
 public function main() returns error? {
-    tgi:Client tgiClient = check new (serviceUrl);
+    tgi:Client tgiClient = check new ({}, serviceUrl);
 
     io:println("=== HuggingFace TGI Text Generation ===\n");
 

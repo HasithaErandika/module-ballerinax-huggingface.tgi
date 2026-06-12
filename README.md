@@ -1,9 +1,9 @@
 # Ballerina Hugging Face Connector
 
-[![Build](https://github.com/HasithaErandika/module-ballerinax-huggingface.tgi/actions/workflows/ci.yml/badge.svg)](https://github.com/HasithaErandika/module-ballerinax-huggingface.tgi/actions/workflows/ci.yml)
-[![GitHub Last Commit](https://img.shields.io/github/last-commit/HasithaErandika/module-ballerinax-huggingface.tgi.svg)](https://github.com/HasithaErandika/module-ballerinax-huggingface.tgi/commits/master)
+[![Build](https://github.com/ballerina-platform/module-ballerinax-huggingface.tgi/actions/workflows/ci.yml/badge.svg)](https://github.com/ballerina-platform/module-ballerinax-huggingface.tgi/actions/workflows/ci.yml)
+[![GitHub Last Commit](https://img.shields.io/github/last-commit/ballerina-platform/module-ballerinax-huggingface.tgi.svg)](https://github.com/ballerina-platform/module-ballerinax-huggingface.tgi/commits/master)
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
-[![GitHub Issues](https://img.shields.io/github/issues/HasithaErandika/module-ballerinax-huggingface.tgi.svg?label=Open%20Issues)](https://github.com/HasithaErandika/module-ballerinax-huggingface.tgi/issues)
+[![GitHub Issues](https://img.shields.io/github/issues/ballerina-platform/module-ballerinax-huggingface.tgi.svg?label=Open%20Issues)](https://github.com/ballerina-platform/module-ballerinax-huggingface.tgi/issues)
 
 ## Overview
 
@@ -57,7 +57,7 @@ To use the `huggingface.tgi` connector in your Ballerina application, update the
 Import the `huggingface.tgi` module.
 
 ```ballerina
-import avi0ra/huggingface.tgi;
+import ballerinax/huggingface.tgi;
 ```
 
 ### Step 2: Instantiate a new connector
@@ -73,7 +73,7 @@ token = "<Your Hugging Face API Token>"
 ```ballerina
 configurable string token = ?;
 
-final huggingface.tgi:Client hfClient = check new ("https://api-inference.huggingface.co", {
+final huggingface.tgi:Client hfClient = check new ({
     auth: {
         token: token
     }
@@ -114,14 +114,14 @@ bal run
 
 ## Examples
 
-The `huggingface.tgi` connector provides practical examples illustrating usage in various scenarios. Explore these [examples](https://github.com/HasithaErandika/module-ballerinax-huggingface.tgi/tree/main/examples/), covering the following use cases:
+The `huggingface.tgi` connector provides practical examples illustrating usage in various scenarios. Explore these [examples](https://github.com/ballerina-platform/module-ballerinax-huggingface.tgi/tree/main/examples/), covering the following use cases:
 
 1. **Text Generation** - Demonstrates native `/generate` endpoint with sampling control for creative writing, factual completion, and code generation
 2. **Token Counter** - Shows how to use `/tokenize` and `/info` endpoints to count tokens and check against model context windows
 
 ## Issues and projects
 
-The **Issues** and **Projects** tabs are available for this repository. To report bugs, request new features, or start discussions, visit the [Issues](https://github.com/HasithaErandika/module-ballerinax-huggingface.tgi/issues) page.
+The **Issues** and **Projects** tabs are available for this repository. To report bugs, request new features, or start discussions, visit the [Issues](https://github.com/ballerina-platform/module-ballerinax-huggingface.tgi/issues) page.
 
 ## Building from the source
 
@@ -211,7 +211,7 @@ All contributors are encouraged to read the [Ballerina Code of Conduct](https://
 
 ## Useful links
 
-* For more information go to the [`huggingface.tgi` package](https://central.ballerina.io/avi0ra/huggingface.tgi/latest).
+* For more information go to the [`huggingface.tgi` package](https://central.ballerina.io/ballerinax/huggingface.tgi/latest).
 * For example demonstrations of the usage, go to [Ballerina By Examples](https://ballerina.io/learn/by-example/).
 * Chat live with us via our [Discord server](https://discord.gg/ballerinalang).
 * Post all technical questions on Stack Overflow with the [#ballerina](https://stackoverflow.com/questions/tagged/ballerina) tag.
