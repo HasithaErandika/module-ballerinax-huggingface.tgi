@@ -1,4 +1,5 @@
-# Ballerina Hugging Face Connector
+# module-ballerinax-huggingface.tgi
+Ballerina connector for Hugging Face Text Generation Inference (TGI)
 
 [![Build](https://github.com/ballerina-platform/module-ballerinax-huggingface.tgi/actions/workflows/ci.yml/badge.svg)](https://github.com/ballerina-platform/module-ballerinax-huggingface.tgi/actions/workflows/ci.yml)
 [![GitHub Last Commit](https://img.shields.io/github/last-commit/ballerina-platform/module-ballerinax-huggingface.tgi.svg)](https://github.com/ballerina-platform/module-ballerinax-huggingface.tgi/commits/master)
